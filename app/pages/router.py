@@ -31,13 +31,13 @@ async def get_register_page(request: Request):
 async def get_hotels_page(
     request: Request,
     location: str,
-    date_to: date,
     date_from: date,
+    date_to: date,
     hotels=Depends(get_hotels_by_location_and_time),
 ):
     dates = get_month_days()
     if date_from > date_to:
-        date_to, date_from = date_from, date_to
+        date_from, date_to = date_to, date_from
     # Автоматически ставим дату заезда позже текущей даты
     date_from = max(datetime.today().date(), date_from)
     # Автоматически ставим дату выезда не позже, чем через 180 дней
@@ -48,8 +48,8 @@ async def get_hotels_page(
             "request": request,
             "hotels": hotels,
             "location": location,
-            "date_to": date_to.strftime("%Y-%m-%d"),
             "date_from": date_from.strftime("%Y-%m-%d"),
+            "date_to": date_to.strftime("%Y-%m-%d"),
             "dates": dates,
         },
     )
