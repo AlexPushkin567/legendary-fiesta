@@ -49,7 +49,7 @@ app.include_router(router_bookings)
 app.include_router(router_images)
 app.include_router(router_prometheus)
 app.include_router(router_import)
-
+app.include_router(router_pages)
 
 # Подключение CORS, чтобы запросы к API могли приходить из браузера
 origins = [
@@ -67,14 +67,10 @@ app.add_middleware(
                    "Authorization"],
 )
 
-
-# Подключение версионирования
 app = VersionedFastAPI(app,
                        version_format='{major}',
-                       prefix_format='/api/v{major}',
+                       prefix_format='/v{major}',
                        )
-
-app.include_router(router_pages)
 
 if settings.MODE == "TEST":
     # При тестировании через pytest, необходимо подключать Redis, чтобы кэширование работало.
