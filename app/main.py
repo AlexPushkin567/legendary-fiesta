@@ -112,9 +112,9 @@ async def add_process_time_header(request: Request, call_next):
     response = await call_next(request)
     process_time = time.time() - start_time
     # При подключении Prometheus + Grafana подобный лог не требуется
-    logger.info("Request handling time", extra={
-        "process_time": round(process_time, 4)
-    })
+    # logger.info("Request handling time", extra={
+    #     "process_time": round(process_time, 4)
+    # })
     return response
 
 # Вы можете заметить один из минусов FastAPI -- вся конфигурация происходит
