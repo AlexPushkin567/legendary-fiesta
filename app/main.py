@@ -69,7 +69,7 @@ app.add_middleware(
 
 app = VersionedFastAPI(app,
                        version_format='{major}',
-                       prefix_format='/v{major}',
+                       prefix_format='/api/v{major}',
                        )
 
 if settings.MODE == "TEST":

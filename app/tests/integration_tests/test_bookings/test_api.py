@@ -22,7 +22,7 @@ async def test_add_and_get_booking(
     booked_rooms,
     authenticated_ac: AsyncClient,
 ):
-    response = await authenticated_ac.post("/bookings", json={
+    response = await authenticated_ac.post("/api/v1/bookings", json={
         "room_id": room_id,
         "date_from": date_from,
         "date_to": date_to,
@@ -30,17 +30,17 @@ async def test_add_and_get_booking(
 
     assert response.status_code == status_code
 
-    response = await authenticated_ac.get("/bookings")
+    response = await authenticated_ac.get("/api/v1/bookings")
     assert len(response.json()) == booked_rooms
 
 
 async def test_get_and_delete_booking(authenticated_ac: AsyncClient):
-    response = await authenticated_ac.get("/bookings")
+    response = await authenticated_ac.get("/api/v1/bookings")
     existing_bookings = [booking["id"] for booking in response.json()]
     for booking_id in existing_bookings:
         response = await authenticated_ac.delete(
-            f"/bookings/{booking_id}",
+            f"/api/v1/bookings/{booking_id}",
         )
 
-    response = await authenticated_ac.get("/bookings")
+    response = await authenticated_ac.get("/api/v1/bookings")
     assert len(response.json()) == 0
