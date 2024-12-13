@@ -66,8 +66,6 @@ instrumentator = Instrumentator(
 instrumentator.instrument(app).expose(app)
 
 admin = Admin(app, engine)  # , authentication_backend=authentication_backend)
-
-
 admin.add_view(UsersAdmin)
 admin.add_view(HotelsAdmin)
 admin.add_view(RoomsAdmin)

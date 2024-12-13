@@ -18,7 +18,7 @@ async def get_bookings(user: Users = Depends(get_current_user)) -> list[SBooking
     return await BookingDAO.find_all_with_images(user_id=user.id)
 
 
-@router.post("", status_code=201)
+@router.post("")  # , status_code=201)
 async def add_booking(
     booking: SNewBooking,
     background_tasks: BackgroundTasks,
@@ -36,7 +36,8 @@ async def add_booking(
     # Celery - отдельная библиотека
     # send_booking_confirmation_email.delay(booking, user.email)
     # Background Tasks - встроено в FastAPI
-    # background_tasks.add_task(send_booking_confirmation_email, booking, user.email)
+    background_tasks.add_task(
+        send_booking_confirmation_email, booking, user.email)
     return booking
 
 
